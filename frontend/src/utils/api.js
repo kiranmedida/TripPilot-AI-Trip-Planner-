@@ -1,5 +1,10 @@
 import axios from 'axios';
-const API_URL = import.meta.env.VITE_API_URL;
+let API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
+// Ensure the API URL ends with '/api' to match the backend prefix
+if (API_URL && !API_URL.endsWith('/api') && !API_URL.endsWith('/api/')) {
+  API_URL = `${API_URL.replace(/\/+$/, '')}/api`;
+}
 
 const api = axios.create({
   baseURL: API_URL,

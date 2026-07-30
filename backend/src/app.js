@@ -42,22 +42,22 @@ const limiter = rateLimit({
   },
 });
 
-app.use('/api/', limiter);
+app.use(['/api/', '/auth', '/itinerary', '/ai', '/trips', '/admin', '/expenses', '/notes', '/goals', '/notifications', '/community'], limiter);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Modular & Legacy Routes
-app.use('/api/auth', authRouter);
-app.use('/api/itinerary', itineraryRouter);
-app.use('/api/ai', aiRouter);
-app.use('/api/trips', tripRouter);
-app.use('/api/admin', adminRouter);
-app.use('/api/expenses', expenseRouter);
-app.use('/api/notes', noteRouter);
-app.use('/api/goals', goalRouter);
-app.use('/api/notifications', notificationRouter);
-app.use('/api/community', communityRouter);
+// Modular & Legacy Routes - supporting both prefixed and non-prefixed paths for maximum client flexibility
+app.use(['/api/auth', '/auth'], authRouter);
+app.use(['/api/itinerary', '/itinerary'], itineraryRouter);
+app.use(['/api/ai', '/ai'], aiRouter);
+app.use(['/api/trips', '/trips'], tripRouter);
+app.use(['/api/admin', '/admin'], adminRouter);
+app.use(['/api/expenses', '/expenses'], expenseRouter);
+app.use(['/api/notes', '/notes'], noteRouter);
+app.use(['/api/goals', '/goals'], goalRouter);
+app.use(['/api/notifications', '/notifications'], notificationRouter);
+app.use(['/api/community', '/community'], communityRouter);
 
 app.get('/health', (req, res) => {
   res.status(200).json({
